@@ -1,0 +1,5 @@
+1. Ejecutar: npm create vite (vanilla, typescript)
+
+2. Instalar dependencias
+
+3. Ejecutar el npm run dev
