@@ -1,9 +1,14 @@
+import axios from 'axios';
+import type { PokeAPIResponse } from '../interfaces/pokeapi-response.interface';
 export class Pokemon {
     constructor(
-        public readonly id: number,
-        public name: string,       
+        private readonly id: number,
+        private name: string,       
     ) {}
 
+    get getName(): string {
+        return this.name;
+    }
     
     get imageUrl(): string {
         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id}.png`;
@@ -16,8 +21,15 @@ export class Pokemon {
     speak(): void {
         console.log(`${this.name}, ${this.name}`);
     }
+
+    async getMoves(): Promise<string> {
+        const { data } = await axios.get<PokeAPIResponse>(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
+
+        return data.name;
+    }
 }
 
 const pikachu = new Pokemon(25, 'Pikachu');
 
-console.log(pikachu.name);
+const moves = await pikachu.getMoves();
+console.log(moves);
